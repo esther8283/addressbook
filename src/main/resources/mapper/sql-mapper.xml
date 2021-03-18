@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="address.mapper.AddressMapper">
+	<!-- 연락처 목록 -->
+	<select id = "selectAddressList" resultType="address.dto.AddressDto">
+		<![CDATA[
+			SELECT 
+				num,name
+			FROM 
+				addressbook 
+			WHERE 
+				num
+			ORDER BY num DESC
+		]]>
+	</select>
+	
+	<!-- 연락처 상세페이지 -->
+	<select id="selectAddressDetail" parameterType="int" resultType="address.dto.AddressDto">
+		<![CDATA[
+			SELECT 
+				num,name,phone,tel,email,addr
+			FROM 
+				addressbook 
+			WHERE 
+				num = #{num}
+		]]>
+	</select>
+	
+	<!-- 연락처 추가하기 -->
+	<insert id="insertAddress" parameterType="address.dto.AddressDto" useGeneratedKeys="true" keyProperty="num">
+		<![CDATA[
+			INSERT INTO addressbook 
+			(name, phone, tel, email, addr)
+			VALUES 
+			(#{name},#{phone},#{tel},#{email},#{addr})
+		]]>
+	</insert>
+</mapper>
